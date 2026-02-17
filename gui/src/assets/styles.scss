@@ -790,7 +790,7 @@ iframe{
 	}
 	
 	.empty-header{
-		height: calc(50px + env(safe-area-inset-top, 0)) !important;
+		// height: calc(50px + env(safe-area-inset-top, 0)) !important;
 	}
 }
 
@@ -805,6 +805,9 @@ iframe{
 		}
 		.layout-main-container,.min-h-screen{
 			 min-height: calc(100vh - env(safe-area-inset-bottom, 0) - env(safe-area-inset-top, 0)) !important;
+		}
+		.absolute-scroll-panel{
+			top: calc(35px + env(safe-area-inset-bottom, 0));
 		}
 	}
 }

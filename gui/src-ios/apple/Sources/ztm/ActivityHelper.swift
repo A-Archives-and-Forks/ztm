@@ -67,11 +67,9 @@ import NetworkExtension
                 }
                 argv[cArgs.count] = nil // 添加 null 终止符
                 
-                // Call the pipy_main function
-                let result = pipy_main(argc: Int32(cArgs.count), argv: argv)
-                
-                // Log the result
-                NSLog("调试-callPipyMain pipy_main returned: \(result)")
+								// Call the pipy_main function
+								let result = pipy_main(argc: Int32(cArgs.count), argv: argv)
+								NSLog("调试-callPipyMain pipy_main returned: \(result)")
             }
             UIApplication.shared.endBackgroundTask(bgTask)
         };
@@ -98,7 +96,7 @@ import NetworkExtension
         }
         
         // 启动 Pipy
-        playPipy()
+        // playPipy()
         
         // 完成任务后调用
         task.setTaskCompleted(success: true)
@@ -181,7 +179,7 @@ import NetworkExtension
     @objc static func handleAppOpen() {
         locationManager?.startLocationUpdates();
 //        self.startBackgroundDownload();
-        self.playPipy();
+        // self.playPipy();
         
     }
 

@@ -27,7 +27,7 @@ const isMobile = () => {
 }
 
 const isMobileWidth = () => {
-	return window.innerWidth <= window.innerHeight
+	return window.innerWidth <= window.innerHeight || platform() == 'ios' || platform() == 'android';
 }
 
 export {

@@ -38,17 +38,7 @@ const home = () => {
 		router.push("/mesh/list");
 	}
 }
-const isMobile = ref(isMobileWidth());
-onActivated(()=>{
-	setTimeout(()=>{
-		isMobile.value = isMobileWidth();
-	},500)
-})
-onMounted(()=>{
-	setTimeout(()=>{
-		isMobile.value = isMobileWidth();
-	},500)
-})
+const isMobile = computed(isMobileWidth);
 
 </script>
 
@@ -57,7 +47,7 @@ onMounted(()=>{
 	<Toolbar class="nopd-header" :class="props.class" :style="props.style">
 			<template #start>
 				<slot v-if="hasStartSlot" name="start"/>
-				<Button v-else-if="props.main && (isMobile || pm =='android'|| pm =='ios')" @click.stop="toggleLeft" class="mobile-show"   text >
+				<Button v-else-if="props.main && (isMobile)" @click.stop="toggleLeft" class="mobile-show"   text >
 					<img class="logo pointer" :src="XeyeSvg" width="28px" height="28px"/>
 				</Button>
 				<Button v-else-if="props.main && pm == 'web'" @click="home"  text >

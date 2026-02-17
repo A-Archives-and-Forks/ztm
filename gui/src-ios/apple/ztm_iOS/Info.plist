@@ -67,7 +67,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>ZTM Requires camera access in order to capture and transmit video</string>
+	<string>ZTM is used for camera selfie function in ZTM chat</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>ZTM Request documents</string>
 	<key>NSFileProtectionComplete</key>
