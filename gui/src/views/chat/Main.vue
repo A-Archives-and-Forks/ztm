@@ -73,9 +73,6 @@ const read = (updated) => {
 const loadrooms = () => {
 	store.dispatch('notice/rooms');
 }
-const load = () => {
-	loadrooms();
-}
 const handleFileUpload = (file) => {
 }
 const windowHeight = ref(window.innerHeight);
@@ -252,7 +249,7 @@ const loadBotHistory = () => {
 }
 watch(()=>selectedMesh,()=>{
 	if(selectedMesh.value){
-		load();
+		loadrooms();
 	}
 },{
 	deep:true,
@@ -284,7 +281,7 @@ const menuToggle = (event) => {
 };
 
 onActivated(()=>{
-	load();
+	loadrooms();
 })
 onMounted(()=>{
 	if(!!route.query?.user){

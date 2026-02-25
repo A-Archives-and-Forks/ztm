@@ -36,9 +36,7 @@ const errorLength = computed(() => store.getters["notice/errorLength"] );
 const open = ref(false);
 const paths = ref()
 const timmer = () => {
-	if(errorLength < 10){
-		store.dispatch('notice/rooms');
-	}
+	store.dispatch('notice/rooms');
 	if(!paths.value && isMobile()){
 		getShared(false, (res)=>{
 			if(res && res.length>0){
