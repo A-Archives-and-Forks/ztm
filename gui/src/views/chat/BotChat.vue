@@ -709,12 +709,11 @@ defineExpose({
 	<Forward v-model:open="forwardOpen" :message="forwardMessage" />
 </template>
 
-<style lang="scss" >
-	// #container{
-	// 	height: 100%;
-	// }
-	// .outside-left{
-	// 	bottom: 1em !important;
-	// }
+<style lang="scss" scoped>
 	
+	/* 添加拖拽时的全局光标 */
+	:global(body.moving) {
+	  cursor: row-resize;
+	  user-select: none;
+	}
 </style>
