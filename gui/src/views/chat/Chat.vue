@@ -241,12 +241,8 @@ const windowHeight = ref(window.innerHeight);
 const viewHeight = computed(() => windowHeight.value - (isMobile.value?49:36));
 const submitStyle = computed(() => style.submitStyle)
 const micStyle= computed(()=>style.micStyle)
-const menuStyle = computed(()=>style.menuStyle)
-const inputStyle = computed(() => {
-	let _style = style.inputStyle(isMobile.value);
-	_style.placeholder.text = t(_style.placeholder.text)
-	return _style;
-})
+const menuStyle = computed(()=>style.menuStyle);
+
 const hasMediaDevices = computed(() => true);
 const postMessage = (message, callback) => {
 	if(props.room?.peer){
@@ -464,6 +460,52 @@ onBeforeUnmount(()=>{
 	timer.value = false;
 })
 
+//todo
+const minHeight = ref(100);
+const moveStartTop = ref();
+const barRef = ref();
+const moving = ref(false);
+const startDrag = (e) => {
+  moving.value = true;
+  
+  // 记录起始鼠标Y坐标和起始高度
+  const startY = e.clientY;
+  const startHeight = minHeight.value;
+  
+  // 拖拽处理函数
+  const onDrag = (e) => {
+    // 计算高度变化：向上拖增加高度，向下拖减少高度
+    const deltaY = startY - e.clientY;
+    const mergeHeight = Math.max(50, startHeight + deltaY);
+		if(mergeHeight>150){
+			minHeight.value = 150
+		} else if(mergeHeight<50){
+			minHeight.value = 50
+		} else {
+			minHeight.value = mergeHeight;
+		}
+		
+    e.preventDefault();
+  };
+  
+  // 停止拖拽
+  const onStop = () => {
+    moving.value = false;
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', onStop);
+  };
+  
+  // 添加全局监听
+  document.addEventListener('mousemove', onDrag);
+  document.addEventListener('mouseup', onStop);
+  
+  e.preventDefault();
+};
+const inputStyle = computed(() => {
+	let _style = style.inputStyle(minHeight.value);
+	_style.placeholder.text = t(_style.placeholder.text)
+	return _style;
+})
 </script>
 
 <template>
@@ -510,16 +552,16 @@ onBeforeUnmount(()=>{
 			:camera="hasMediaDevices?menuStyle('inside-left','70px'):false"
 			/>
 	</div>
+	<div ref="barRef" @mousedown="startDrag" :class="['resize-bar', { moving }]"  :style="{ bottom: (minHeight +55) + 'px' }"></div>
 	<DrawMenu :menus="menus" v-model:open="menuOpen" :title="forwardTarget?.name"/>
 	<Forward v-model:open="forwardOpen" :message="forwardMessage" />
 </template>
 
-<style lang="scss" >
-	// #container{
-	// 	height: 100%;
-	// }
-	// .outside-left{
-	// 	bottom: 1em !important;
-	// }
+<style lang="scss" scoped>
 	
+	/* 添加拖拽时的全局光标 */
+	:global(body.moving) {
+	  cursor: row-resize;
+	  user-select: none;
+	}
 </style>

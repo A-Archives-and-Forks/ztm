@@ -1420,7 +1420,7 @@ fieldset{
 	}
 	.mobile-fixed{
 		position: fixed !important;
-		top: calc(35px + env(safe-area-inset-bottom, 0));
+		top: calc(10px + env(safe-area-inset-bottom, 0));
 		left: 0;
 		right: 0;
 		bottom: 0;

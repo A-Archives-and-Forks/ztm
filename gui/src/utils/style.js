@@ -478,7 +478,7 @@ const dropupStyles = () => {
 	}
 }
 
-const inputStyle = (isMobile) => {
+const inputStyle = (minHeight) => {
 	
 	if(isDrak()){
 		return {
@@ -497,7 +497,7 @@ const inputStyle = (isMobile) => {
 				"text": {
 					"fontSize": "1.05em",
 					"paddingTop": "50px",
-					"minHeight":!!isMobile?"100px":"100px",
+					"minHeight": `${minHeight}px`,
 					"paddingBottom": "13px",
 					"paddingLeft": "12px",
 					"paddingRight": "2.4em"
@@ -520,7 +520,7 @@ const inputStyle = (isMobile) => {
 				"text": {
 					"fontSize": "1.05em",
 					"paddingTop": "50px",
-					"minHeight":!!isMobile?"100px":"100px",
+					"minHeight": `${minHeight}px`,
 					"paddingBottom": "13px",
 					"paddingLeft": "12px",
 					"paddingRight": "2.4em"

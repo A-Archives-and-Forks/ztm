@@ -282,11 +282,6 @@ const viewHeight = computed(() => windowHeight.value - (isMobile.value?49:36));
 const submitStyle = computed(() => style.submitStyle)
 const micStyle= computed(()=>style.micStyle)
 const menuStyle = computed(()=>style.menuStyle)
-const inputStyle = computed(() => {
-	let _style = style.inputStyle(isMobile.value);
-	_style.placeholder.text = t(_style.placeholder.text)
-	return _style;
-})
 const hasMediaDevices = computed(() => true);
 const delta = ref('');
 const workerOnMessage = (msg) => {
@@ -599,6 +594,52 @@ const gohistory = () => {
 	emits('history',true);
 }
 
+const minHeight = ref(100);
+const moveStartTop = ref();
+const barRef = ref();
+const moving = ref(false);
+const startDrag = (e) => {
+  moving.value = true;
+  
+  // 记录起始鼠标Y坐标和起始高度
+  const startY = e.clientY;
+  const startHeight = minHeight.value;
+  
+  // 拖拽处理函数
+  const onDrag = (e) => {
+    // 计算高度变化：向上拖增加高度，向下拖减少高度
+    const deltaY = startY - e.clientY;
+    const mergeHeight = Math.max(50, startHeight + deltaY);
+		if(mergeHeight>150){
+			minHeight.value = 150
+		} else if(mergeHeight<50){
+			minHeight.value = 50
+		} else {
+			minHeight.value = mergeHeight;
+		}
+		
+    e.preventDefault();
+  };
+  
+  // 停止拖拽
+  const onStop = () => {
+    moving.value = false;
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', onStop);
+  };
+  
+  // 添加全局监听
+  document.addEventListener('mousemove', onDrag);
+  document.addEventListener('mouseup', onStop);
+  
+  e.preventDefault();
+};
+const inputStyle = computed(() => {
+	let _style = style.inputStyle(minHeight.value);
+	_style.placeholder.text = t(_style.placeholder.text)
+	return _style;
+})
+
 watch(() => selectedMesh, () => {
 	back()
 }, {
@@ -650,6 +691,7 @@ defineExpose({
 			:images="menuStyle('inside-left','10px')"
 			:camera="hasMediaDevices?menuStyle('inside-left','70px'):false"
 			/>
+			<div ref="barRef" @mousedown="startDrag" :class="['resize-bar', { moving }]"  :style="{ bottom: (minHeight +55) + 'px' }"></div>
 	</div>
 	<Dialog class="noheader" v-model:visible="openToolcallEditor" modal :style="{ minHeight:'400px',minWidth:'400px'  }">
 		<AppHeader :back="() => openToolcallEditor = false" :main="false">
