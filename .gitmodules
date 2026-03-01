@@ -4,5 +4,5 @@
 	branch = v2
 [submodule "extensions/ztm-chat"]
 	path = extensions/ztm-chat
-	url = git@github.com:flomesh-io/openclaw-channel-plugin-ztm.git
+	url = https://github.com/flomesh-io/openclaw-channel-plugin-ztm.git
 	branch = main
