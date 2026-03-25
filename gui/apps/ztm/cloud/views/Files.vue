@@ -291,7 +291,11 @@ const selectFile = (e, item) => {
 
 const handleLongTap = (item) => (e) => {
 	longtapblock.value++;
-	selectedFile.value = item;
+	selectedFile.value = {
+		...item,
+		...detailData.value[item.path]
+	};
+	
 	loadFileAttr();
 	showAtionMenu(e);
 }

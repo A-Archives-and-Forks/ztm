@@ -5,7 +5,7 @@ import FileService from '../service/FileService';
 import { checker, bitUnit, openFile, isImage, saveFile,labels,colors,icons } from '@/utils/file';
 import { useConfirm } from "primevue/useconfirm";
 import { useStore } from 'vuex';
-import { isPC } from '@/utils/platform';
+import { isPC, platform } from '@/utils/platform';
 import { copy } from '@/utils/clipboard';
 import { merge } from '@/service/common/request';
 import { useToast } from "primevue/usetoast";
